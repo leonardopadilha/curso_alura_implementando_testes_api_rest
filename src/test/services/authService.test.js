@@ -20,4 +20,15 @@ describe('Testando a authService.cadastrarUsuario', () => {
         // Assert
         await expect(usuarioSalvo).rejects.toThrowError('A senha de usuário é obrigatória!');
     });
+
+    it('Um usuário não pode ser cadastrado sem email', () => {
+        const usarioMockSemEmail = {
+        nome: 'Fulado de tal',
+        senha: '123456',
+        };
+
+        const usuarioSalvo = authService.cadastrarUsuario(usarioMockSemEmail);
+
+        expect(usuarioSalvo).rejects.toThrowError('O email do usuário é obrigatório!');
+    });
 });
