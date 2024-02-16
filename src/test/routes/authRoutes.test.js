@@ -40,4 +40,19 @@ describe('Testando a roda login (POST)', () => {
                 .expect(500)
                 .expect('"Usuario não cadastrado."')
     });
+
+    it('O login deve validar e-mail e senha incorretos', async () => {
+        const userMock = {
+            email: 'fulado.detal@teste.com',
+            senha: '123senha',
+        };
+
+        await request(app)
+                .post('/login')
+                .set('Accept', 'application/json')
+                .send(userMock)
+                .expect(500)
+                .expect('"Usuario ou senha invalido."')
+        
+    })
 })
