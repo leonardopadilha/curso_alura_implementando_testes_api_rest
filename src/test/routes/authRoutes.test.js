@@ -55,4 +55,19 @@ describe('Testando a roda login (POST)', () => {
                 .expect('"Usuario ou senha invalido."')
         
     })
+    it('O login deve validar se está sendo retornado um accessToken', async () => {
+        const loginMock = {
+            email: 'raphael@teste.com.br',
+            senha: '123456'
+        }
+
+        const resposta = await request(app)
+                                    .post('/login')
+                                    .set('Accept', 'application/json')
+                                    .send(loginMock)
+                                    .expect(201);
+        
+        expect(resposta.body.message).toBe('Usuario conectado')
+        expect(resposta.body).toHaveProperty("accessToken");
+    })
 })
