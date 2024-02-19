@@ -31,4 +31,15 @@ describe('Testando a authService.cadastrarUsuario', () => {
 
         expect(usuarioSalvo).rejects.toThrowError('O email do usuário é obrigatório!');
     });
+
+    it('Um usuário não pode ser cadastrado sem nome', () => {
+        const usarioMockSemNome = {
+        email: 'fulado@teste.com',
+        senha: '123456',
+        };
+
+        const usuarioSalvo = authService.cadastrarUsuario(usarioMockSemNome);
+
+        expect(usuarioSalvo).rejects.toThrowError('O nome do usuário é obrigatório!');
+    });
 });
