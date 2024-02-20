@@ -42,4 +42,21 @@ describe('Testando a authService.cadastrarUsuario', () => {
 
         expect(usuarioSalvo).rejects.toThrowError('O nome do usuário é obrigatório!');
     });
+
+    it('A senha do usuário precisa ser criptografada quando for salva no banco de dados', async () => {
+        const data = {
+            nome: "Fulano de tal",
+            email: "fulado.detal@senha1.com",
+            senha: "senha12345"
+        }
+
+        const usuario = await authService.cadastrarUsuario(data)
+        expect(usuario.message).toEqual("usuario criado");
+
+        const senhasIguais = await bcrypt.compare('senha12345', usuario.content.senha);
+
+        expect(senhasIguais).toStrictEqual(true);
+
+        await Usuario.excluir(usuario.content.id)
+    })
 });
