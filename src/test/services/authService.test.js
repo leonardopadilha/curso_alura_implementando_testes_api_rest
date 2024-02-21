@@ -59,4 +59,17 @@ describe('Testando a authService.cadastrarUsuario', () => {
 
         await Usuario.excluir(usuario.content.id)
     })
+
+    it('Ao cadastrar um usuário sem mock, deve ser retornada uma mensagem de sucesso', async () => {
+        const dadosUsuario = {
+            nome: "Fulano de tal",
+            email: "fulado.de_tal@teste.com",
+            senha: "senha12345"
+        }
+
+        const usuario = await authService.cadastrarUsuario(dadosUsuario);
+        expect(usuario.message).toEqual("usuario criado");
+
+        await Usuario.excluir(usuario.content.id)
+    });
 });
