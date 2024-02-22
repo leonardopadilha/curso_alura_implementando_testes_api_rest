@@ -72,4 +72,18 @@ describe('Testando a authService.cadastrarUsuario', () => {
 
         await Usuario.excluir(usuario.content.id)
     });
+
+    it('Ao cadastrar um usuário, validar o retorno das informações do usuário', async () => {
+        const data = {
+            nome: "Fulano de tal",
+            email: "fulado.de_tal@teste.com",
+            senha: "senha12345"
+        }
+
+        const usuario = await authService.cadastrarUsuario(data)
+        
+        expect(usuario.content).toMatchObject(data)
+        
+        await Usuario.excluir(usuario.content.id)
+    })
 });
