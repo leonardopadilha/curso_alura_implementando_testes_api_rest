@@ -86,4 +86,21 @@ describe('Testando a authService.cadastrarUsuario', () => {
         
         await Usuario.excluir(usuario.content.id)
     })
+
+    it('Ao cadastrar um usuário com mock, deve ser retornada uma mensagem de sucesso', async () => {
+        const usuarioValido = {
+            nome: "Fulano de tal",
+            email: "fulado.tal@teste.com",
+            senha: "12345"
+        }
+
+        jest
+            .spyOn(
+                authService,
+                authService.cadastrarUsuario.name
+            ).mockReturnValue('usuario criado')
+
+        const usuario = await authService.cadastrarUsuario(usuarioValido)
+        expect(usuario).toEqual('usuario criado')
+    });
 });
